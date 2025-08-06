@@ -160,4 +160,17 @@ dump.rdb
 
 # 로컬 로그 파일들
 *.log.local
-logs/
+logs/# G
+itHub Integration 보안
+*.backup
+github-setup-guide.md
+create-github-repo.md
+
+# 개인 설정 파일들
+PERSONAL_README.md
+FORK_INFO.md
+
+# 백업 및 업데이트 보고서
+backup-history.txt
+update-report-*.md
+.github-sync-*
