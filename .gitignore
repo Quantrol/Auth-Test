@@ -137,3 +137,27 @@ packages/stack/*
 !packages/react/package.json
 !packages/next/package.json
 !packages/stack/package.json
+# 로컬 개발환경 관련 파일들
+.env.local
+.env.development.local
+.env.production.local
+dev-server.log.untracked.txt
+explained-query.untracked.json
+
+# asdf 관련
+.tool-versions.local
+
+# direnv 관련 (이미 .envrc는 포함되어야 함)
+# .envrc는 프로젝트에 포함되므로 제외하지 않음
+
+# 로컬 데이터베이스 파일들
+*.db
+*.sqlite
+*.sqlite3
+
+# 로컬 Redis 덤프
+dump.rdb
+
+# 로컬 로그 파일들
+*.log.local
+logs/

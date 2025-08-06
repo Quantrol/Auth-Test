@@ -119,42 +119,77 @@ This is for you if you want to contribute to the Stack Auth project or run the S
 
 - Node v20
 - pnpm v9
-- Docker
+- PostgreSQL 14+
+- Redis 6+
+- asdf (버전 관리)
+- direnv (환경변수 관리)
 
-### Setup
+### Setup (asdf + direnv + dev.sh 방식)
 
-Pre-populated .env files for the setup below are available and used by default in `.env.development` in each of the packages. (Note: If you're creating a production build (eg. with `pnpm run build`), you must supply the environment variables manually.)
+Docker 대신 로컬 개발환경을 사용합니다. 다음 단계를 따라 설정하세요:
 
-In a new terminal:
+#### 1. 필수 도구 설치 (macOS)
 
-```sh
-pnpm install
+```bash
+# asdf 설치
+brew install asdf
 
-# Build the packages and generate code. We only need to do this once, as `pnpm dev` will do this from now on
-pnpm build:packages
-pnpm codegen
+# direnv 설치  
+brew install direnv
 
-# Start the dependencies (DB, Inbucket, etc.) as Docker containers, seeding the DB with the Prisma schema
-# Make sure you have Docker (or OrbStack) installed and running
-pnpm restart-deps
-# restart-deps is the same as:
-#   pnpm stop-deps  (if the containers are already running)
-#   pnpm start-deps
+# PostgreSQL 설치
+brew install postgresql
 
-# Start the dev server
-pnpm dev
-# For systems with limited resources, you can run a minimal development setup with just the backend and dashboard
-# pnpm run dev:basic
-
-# In a different terminal, run tests in watch mode
-pnpm test
+# Redis 설치
+brew install redis
 ```
 
-You can now open the dev launchpad at [http://localhost:8100](http://localhost:8100). From there, you can navigate to the dashboard at [http://localhost:8101](http://localhost:8101), API on port 8102, demo on port 8103, docs on port 8104, Inbucket (e-mails) on port 8105, and Prisma Studio on port 8106. See the dev launchpad for a list of all running services.
+#### 2. 개발환경 초기 설정
 
-Your IDE may show an error on all `@stackframe/XYZ` imports. To fix this, simply restart the TypeScript language server; for example, in VSCode you can open the command palette (Ctrl+Shift+P) and run `Developer: Reload Window` or `TypeScript: Restart TS server`.
+```bash
+# 개발환경 자동 설정 (asdf 플러그인, Node.js, pnpm 설치)
+./dev.sh setup
+```
 
-You can also open Prisma Studio to see the database interface and edit data directly:
+#### 3. 의존성 서비스 시작
+
+```bash
+# PostgreSQL과 Redis 서비스 시작
+./dev.sh deps
+```
+
+#### 4. 개발 서버 시작
+
+```bash
+# 전체 개발 서버 시작
+./dev.sh dev
+
+# 또는 기본 서버만 (백엔드 + 대시보드, 리소스 절약)
+./dev.sh dev:basic
+```
+
+### 개발 스크립트 사용법
+
+```bash
+./dev.sh help          # 도움말 표시
+./dev.sh setup         # 개발환경 초기 설정
+./dev.sh deps          # 의존성 서비스 시작
+./dev.sh stop-deps     # 의존성 서비스 중지
+./dev.sh dev           # 개발 서버 시작
+./dev.sh dev:basic     # 기본 개발 서버 시작
+./dev.sh build         # 프로젝트 빌드
+./dev.sh test          # 테스트 실행
+./dev.sh clean         # 빌드 파일 정리
+./dev.sh db:init       # 데이터베이스 초기화
+./dev.sh db:reset      # 데이터베이스 리셋
+./dev.sh db:seed       # 시드 데이터 삽입
+```
+
+개발 런치패드는 [http://localhost:8100](http://localhost:8100)에서 접근할 수 있습니다. 여기서 대시보드(8101), API(8102), 데모(8103), 문서(8104) 등 모든 실행 중인 서비스에 접근할 수 있습니다.
+
+IDE에서 `@stackframe/XYZ` 임포트 오류가 표시될 수 있습니다. 이를 해결하려면 TypeScript 언어 서버를 재시작하세요. VSCode에서는 명령 팔레트(Ctrl+Shift+P)를 열고 `Developer: Reload Window` 또는 `TypeScript: Restart TS server`를 실행하세요.
+
+Prisma Studio를 사용하여 데이터베이스를 직접 관리할 수도 있습니다:
 
 ```sh
 pnpm run prisma studio

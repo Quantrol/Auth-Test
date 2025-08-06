@@ -1,0 +1,65 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Stack: Quick Start",
+            "type": "shell",
+            "command": "./dev.sh",
+            "args": ["quick"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Stack: Status Check",
+            "type": "shell",
+            "command": "./dev.sh",
+            "args": ["status"],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Stack: Monitor",
+            "type": "shell",
+            "command": "./monitor.sh",
+            "args": ["monitor"],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Stack: Open All Services",
+            "type": "shell",
+            "command": "open",
+            "args": [
+                "http://localhost:8100",
+                "http://localhost:8101", 
+                "http://localhost:8102",
+                "http://localhost:8103",
+                "http://localhost:8104"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
